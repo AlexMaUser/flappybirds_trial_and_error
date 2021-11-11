@@ -1,7 +1,6 @@
 import pygame, sys, random
 
 
-
 def draw_floor():
     screen.blit(floor_surface, (floor_x_pos, 410))
     screen.blit(floor_surface, (floor_x_pos + 300, 410))
@@ -9,9 +8,8 @@ def draw_floor():
 
 def create_pipe():
     random_pipe_pos = random.choice(pipe_height)
-    bottom_pipe = pipe_surface.get_rect(midtop=(450, random_pipe_pos))
-    top_pipe = pipe_surface.get_rect(midbottom=(450, random_pipe_pos - 150))
-    return bottom_pipe, top_pipe
+    new_pipe = pipe_surface.get_rect(midtop=(450, random_pipe_pos))
+    return new_pipe
 
 
 def move_pipes(pipes):
@@ -22,11 +20,7 @@ def move_pipes(pipes):
 
 def draw_pipes(pipes):
     for pipe in pipes:
-        if pipe.bottom >= 520:  # stim ca teava este in partea de jos a ecranului coordonata Y
-            screen.blit(pipe_surface, pipe)
-        else:
-            flip_pipe = pygame.transform.flip(pipe_surface, False, True)
-            screen.blit(flip_pipe, pipe)
+        screen.blit(pipe_surface, pipe)
 
 
 def check_collision(pipes):
@@ -137,7 +131,7 @@ while True:
                 bird_movement = 0
                 score = 0
         if event.type == SPAWNPIPE:
-            pipe_list.extend(create_pipe())
+            pipe_list.append(create_pipe())
         if event.type == BIRDFLAP:
             if bird_index < 2:
                 bird_index += 1
@@ -181,6 +175,3 @@ while True:
     pygame.display.update()
     clock.tick(120)
 
-
-#Code is inspired from https://www.youtube.com/Clearcode. 
-I was inspired by his tutorial and decide to try and code myself from his tutorial.
